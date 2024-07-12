@@ -23,8 +23,6 @@ router.route("/")
 .get(wrapAsync(ListingController.showingAllListings))
 .post(isLoggedIn,upload.single('listing[image]'),validateListing, wrapAsync(ListingController.addNewListing));
 
-
-
 // showing new router 
 router.get("/new",isLoggedIn, ListingController.renderingFormForListing);
 router.get("/my-listings",isLoggedIn,wrapAsync(ListingController.renderingYourListing));
@@ -38,7 +36,8 @@ router.get("/category/:category",wrapAsync(ListingController.renderCategory));
 // edit route 
 router.get("/edit/:id",isLoggedIn,isOnwer,wrapAsync(ListingController.renderingEditListing));
 
-router.put("/:id",isLoggedIn,isOnwer,upload.single('listing[image]'),validateListing, wrapAsync(ListingController.editingListing));
+router.put("/:id",isLoggedIn,isOnwer,upload.single('listing[image]'),validateListing,wrapAsync(ListingController.editingListing));
+
 
 router.delete("/:id", isLoggedIn,isOnwer,wrapAsync(ListingController.deleteingListing));
 

@@ -19,7 +19,7 @@ const User = require("./models/user.js");
 const LocalStrategy = require("passport-local");
 const userRoute = require("./router/user.js");
 
-const dbUrl = process.env.ATLASLINK ;
+const dbUrl = `mongodb://127.0.0.1:27017/WonderLust` ;
 
 main()
     .then(() => console.log(`Connected successfully`))
@@ -42,18 +42,6 @@ app.get('/', (req, res) => {
     res.send("Hello, I am Root");
 });
 
-const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    crypto: {
-        secret: process.env.SECRET
-    },
-    touchAfter: 24 * 3600,
-});
-
-store.on("error", (err) => {
-    console.log("Session store error:", err);  
-});
-
 app.use(session({
     secret:  process.env.SECRET,
     resave: false,
@@ -64,7 +52,6 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 3,
         httpOnly: true
     },
-    store
 }));
 
 app.use(passport.initialize());

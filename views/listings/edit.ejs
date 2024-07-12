@@ -12,10 +12,12 @@
             <label for="description" class="block mb-2 text-sm font-medium text-black">Description</label>
             <input type="text" id="description"  value="<%= data.description %>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " name="listing[description]" placeholder="Enter The description" required />
         </div >
-        <div class="mb-5">
-            <img class="rounded-xl" src="<%=originalImage %>" alt="listing_image">
+        <div class="mb-5 w-40">
+            <img class="rounded-xl w-full h-full object-contain" src="<%=originalImage %>" alt="listing_image">
         </div>
-        
+        <div class="mb-5">
+            <input type="hidden" id="category"  value="<%= data.category %>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " name="listing[category]" placeholder="Enter The description" required />
+        </div >
         <div class="mb-5">
             <label for="image" class="block mb-2 text-sm font-medium text-black">Upload Image</label>
             <input type="file" id="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full " name="listing[image]"  />

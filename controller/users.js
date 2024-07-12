@@ -1,6 +1,6 @@
 const { model } = require("mongoose");
 const User = require("../models/user.js");
-const {cloudinary} = require('../cloudconfig'); 
+const { cloudinary } = require('../cloudconfig');
 
 
 module.exports.renderSignUp = (req, res) => {
@@ -66,7 +66,9 @@ module.exports.userDetailUpdate = async (req, res) => {
         user.email = req.body.email;
     }
     if (req.file) {
-      await cloudinary.uploader.destroy(user.image.filename);
+        if (user.image.filename) {
+            await cloudinary.uploader.destroy(user.image.filename);
+        }
         let { path, filename } = req.file;
         user.image = { path, filename };
     }
@@ -76,9 +78,9 @@ module.exports.userDetailUpdate = async (req, res) => {
 
 }
 
-module.exports.renderusernameform = (req,res)=>{
+module.exports.renderusernameform = (req, res) => {
     res.render("./user/usernameform");
-  }
+}
 
 module.exports.checkingUsername = async (req, res) => {
     let { username } = req.body;
@@ -88,37 +90,37 @@ module.exports.checkingUsername = async (req, res) => {
         req.flash("error", "No user found with this username");
         return res.redirect("/usernameform");
     }
-  
+
     req.session.userId = user._id;
-    res.render("./user/newpassword", { user }); 
-  }  
+    res.render("./user/newpassword", { user });
+}
 
 module.exports.saveNewPassword = async (req, res) => {
-    const userId = req.session.userId; 
+    const userId = req.session.userId;
     // console.log("User ID from session:", userId);
     try {
-      let user = await User.findById(userId);
-  
-      if (!user) {
-          req.flash("error", "User not found");
-          return res.redirect("/usernameform");
-      }
-  
-       let {password,password1 } = req.body;
-      if(password === password1){
-        user.setPassword(password, async () => {
-          await user.save();
-          req.flash('success', 'Password updated successfully');
-          res.redirect('/signin');
-      });
-      }else{
-        req.flash('error', 'Passwords do not match');
+        let user = await User.findById(userId);
+
+        if (!user) {
+            req.flash("error", "User not found");
+            return res.redirect("/usernameform");
+        }
+
+        let { password, password1 } = req.body;
+        if (password === password1) {
+            user.setPassword(password, async () => {
+                await user.save();
+                req.flash('success', 'Password updated successfully');
+                res.redirect('/signin');
+            });
+        } else {
+            req.flash('error', 'Passwords do not match');
+            res.redirect('/usernameform');
+        }
+
+    } catch (error) {
+        console.error('Error updating password:', error);
+        req.flash('error', 'Failed to update password');
         res.redirect('/usernameform');
-      }
-     
-  } catch (error) {
-      console.error('Error updating password:', error);
-      req.flash('error', 'Failed to update password');
-      res.redirect('/usernameform');
-  }
-  }  
+    }
+}  

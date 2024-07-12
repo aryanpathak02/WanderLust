@@ -11,7 +11,7 @@
       <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
         <% if(currUser) {%>
-          <img class="w-8 h-8 rounded-full" src="<%= currUser.image.path  %>" alt="user photo">
+          <img class="w-8 h-8 rounded-full" src="<%= currUser.image.path %>" alt="user photo">
           <%} else { %>
            <img class="w-8 h-8 object-cover rounded-full" src="https://static.vecteezy.com/system/resources/previews/005/005/788/original/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg" alt="user photo">
            <% }%>
