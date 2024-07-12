@@ -1,0 +1,126 @@
+<% layout('./layouts/boillerplate') -%>
+
+  
+    <body>
+        <div class="w-full px-4 md:w-3/5  md:mx-auto">
+            <p class="text-2xl font-medium my-4 ">
+                <%= data.title%>
+            </p>
+            <img class="w-full h-60 sm:h-96 rounded-xl my-2 object-cover" src="<%= data.image.path%>" alt="<%= data.title%>">
+              
+            <p>
+              <span class="font-bold">Owner name :</span>  <%= data.owner.username%>
+            </p>
+            <p>
+                <span class="font-bold">Description :</span>  <%= data.description%>
+            </p>
+            <p>
+                <span class="font-bold">Price :</span> <%= data.price.toLocaleString('en-IN', { style: 'currency' , currency: 'INR' }) %>/night
+            </p>
+            <p>
+                <span class="font-bold">Location :</span> <%= data.location%>
+            </p>
+            <p class="mb-4">
+                <span class="font-bold">Country :</span> <%= data.country%>
+            </p>
+
+             <% if(currUser && currUser._id.equals(data.owner._id)) {%>
+
+            <a href="/listings/edit/<%= data._id%>"
+                class="text-white bg-black hover:opacity-50  focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ">Edit</a>
+
+
+            <form class="inline-block" action="/listings/<%= data._id %>?_method=DELETE" method="POST">
+
+                <button
+                    class="focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Delete</button>
+            </form>
+            <% } %>
+            <hr class="border-2 my-6 border-black border-dashed">
+            <% if(currUser){ %>
+            <div class="lg:w-1/2 ">
+                <h2 class="text-xl font-bold">Review sections</h2>
+                <p>Add Your Exprince</p>
+                <form action="/listings/<%= data.id %>/reviews" method="POST">
+                        <div class="relative mb-6 mt-4">
+                            <label for="labels-range-input" class="font-medium text-gray-900">Rating</label>
+                            <input id="labels-range-input" name="review[rating]" type="range" value="3" min="1" max="5"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <span class="text-sm text-gray-500 absolute start-0 -bottom-6">1</span>
+                            <span
+                                class="text-sm text-gray-500 absolute start-[25%] -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">2</span>
+                            <span
+                                class="text-sm text-gray-500 absolute start-[50%] -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">3</span>
+                            <span
+                                class="text-sm text-gray-500 absolute start-[75%] -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">4</span>
+                            <span class="text-sm text-gray-500 absolute end-0 -bottom-6">5</span>
+                        </div>
+                        <div class="my-2">
+                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 ">Comment</label>
+                            <textarea id="message" name="review[comment]" rows="4"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Leave a comment..." required></textarea>
+                        </div>
+                        <button
+                            class="focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">Submit</button>
+                </form>
+            </div>
+            <% } %>
+            <%  if(data.reviews.length > 0) {%>
+            <div class="w-full">
+                <h2 class="text-xl font-bold my-4">Showing review</h2>
+                <div class=" max-sm:text-sm gap gap-col-2 flex items-center flex-wrap  mb-4">
+                <%for(review of data.reviews){%>
+                    <div class="border-2 border-black p-4 rounded-lg  w-full xl:w-[48%] mx-2 my-2 flex justify-between  sm:items-center flex-col sm:flex-row sm:gap-x-2 ">
+                        <div class="flex items-center  gap-x-4 ">
+                        <img class="w-16 h-16 border-2 border-black object-cover rounded-full"
+                            src="<%=  review.author.image.path %>" alt="">
+                        <div class="relative">
+                            <p><span class="font-medium">Username:</span> <%= review.author.username  %></p>
+                            <p><span class="font-medium">Rating:</span> <%= review.rating %>.0⭐</p>
+                            <p><span class="font-medium">Comment:</span> <%= review.comment %> </p>
+                        </div>
+                     
+                    </div>  
+                     <% if(currUser  && currUser.username === review.author.username){%>
+                        <form action="/listings/<%= data.id %>/reviews/<%=review.id %>?_method=DELETE" method="POST">
+                            <button
+                            class=" max-sm:hidden focus:outline-none text-white  bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  ">Delete </button>
+                        </form>
+                        <% } %>
+                  
+                    </div>
+                    <% if(currUser  && currUser.username === review.author.username){%>
+                        <form action="/listings/<%= data.id %>/reviews/<%=review.id %>?_method=DELETE" method="POST">
+                            <button
+                            class=" mx-2 sm:hidden focus:outline-none text-white w-full sm:w-1/2  bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  ">Delete Your Reviw </button>
+                        </form>
+                        <% } %>
+                    <%}%>
+                </div>
+            </div>
+           <% } %>
+
+           <div> 
+            <p class="text-xl font-medium mb-4" >Where you’ll be</p>
+            <div id="map" class="h-96 mb-2"></div>
+           </div>
+        </div>
+      <script>
+        let latitude = <%= JSON.stringify(data.maplocation.coordinates[1]) %>;
+        let longitude = <%= JSON.stringify(data.maplocation.coordinates[0]) %>;
+        let locationName = `loaction will be showen after payment`;
+        console.log(latitude, longitude);
+    
+        var map = L.map('map').setView([latitude, longitude], 13);
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    
+    var marker = L.marker([latitude, longitude]).addTo(map)
+      .bindPopup(locationName)
+      .openPopup();
+    
+      </script>
+    </body>

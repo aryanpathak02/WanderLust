@@ -1,0 +1,76 @@
+<% layout('./layouts/boillerplate') -%>
+
+    <body>
+        <h1 class="text-2xl sm:text-3xl font-bold text-center my-6 underline">Welcome to WonderLust</h1>
+        <div class="flex items-center justify-evenly mb-8 flex-wrap max-sm:gap-x-6 max-sm:gap-y-4">
+            <a href="/listings/category/houseboats">
+                <div class="flex items-center flex-col text-gray-700 opacity-70 cursor-pointer hover:opacity-100">
+                    <i class="fa-solid fa-ship text-lg"></i>
+                    <p class="text-sm">Houseboats</p>
+                </div>
+            </a>
+            <a href="/listings/category/mountain">
+                <div class="flex items-center flex-col text-gray-700 opacity-70 cursor-pointer hover:opacity-100">
+                    <i class="fa-solid fa-mountain text-lg"></i>
+                    <p class="text-sm">Mountain</p>
+                </div>
+            </a>
+            <a href="/listings/category/top_city">
+                <div class="flex items-center flex-col text-gray-700 opacity-70 cursor-pointer hover:opacity-100">
+                    <i class="fa-solid fa-city text-lg"></i>
+                    <p class="text-sm">Top City</p>
+                </div>
+            </a>
+            <a href="/listings/category/beaches">
+                <div class="flex items-center flex-col text-gray-700 opacity-70 cursor-pointer hover:opacity-100">
+                    <i class="fa-solid fa-umbrella-beach text-lg"></i>
+                    <p class="text-sm">Beaches</p>
+                </div>
+            </a>
+            <a href="/listings/category/camping">
+                <div class="flex items-center flex-col text-gray-700 opacity-70 cursor-pointer hover:opacity-100">
+                    <i class="fa-solid fa-campground text-lg"></i>
+                    <p class="text-sm">Camping</p>
+                </div>
+            </a>
+            <a href="/listings/category/tower">
+                <div class="flex items-center flex-col text-gray-700 opacity-70 cursor-pointer hover:opacity-100">
+                    <i class="fa-solid fa-building text-lg"></i>
+                    <p class="text-sm">Tower</p>
+                </div>
+            </a>
+            <a href="/listings/category/camping_van">
+                <div class="flex items-center flex-col text-gray-700 opacity-70 cursor-pointer hover:opacity-100">
+                    <i class="fa-solid fa-caravan text-lg"></i>
+                    <p class="text-sm">Camper Van</p>
+                </div>
+            </a>
+            <a href="/listings/category/igloo">
+                <div class="flex items-center flex-col text-gray-700 opacity-70 cursor-pointer hover:opacity-100">
+                    <i class="fa-solid fa-igloo text-lg"></i>
+                    <p class="text-sm">Igloo</p>
+                </div>
+            </a>
+            <!-- <div class="w-[20%]">
+              
+            </div> -->
+        </div>
+        <div
+            class="flex justify-evenly items-center w-full 2xl:container mx-auto flex-wrap  justify-around items-center ">
+            <% for(data of listings) {%>
+                <div class="rounded-xl w-80 max-sm:w-[90%] mb-8 text-black  ">
+                    <a href="/listings/<%= data.id %>"> <img
+                            class=" h-80 max-sm:h-60 w-full object-cover rounded-xl hover:opacity-50"
+                            src="<%= data.image.path %>" alt="property_image"></a>
+                    <p class="mt-2 font-bold">
+                        <%= data.title %>
+                    </p>
+                    <p>
+                        <%= data.price.toLocaleString('en-IN', { style: 'currency' , currency: 'INR' }) %>/night
+                    </p>
+                </div>
+
+                <% } %>
+        </div>
+
+    </body>
