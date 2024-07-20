@@ -114,5 +114,10 @@ module.exports.renderingYourListing = async (req,res)=>{
 module.exports.renderCategory = async (req,res)=>{
   let {category} = req.params;
   let listings = await Listings.find({category : category});
+  console.log(listings);
+  if(listings.length === 0){
+    req.flash("error","No Listing found ");
+    return res.redirect("/listings");
+  }
   res.render("./listings/index.ejs",{listings});
 }

@@ -19,7 +19,7 @@ const User = require("./models/user.js");
 const LocalStrategy = require("passport-local");
 const userRoute = require("./router/user.js");
 
-const dbUrl = process.env.ATLASLINK ;
+const dbUrl =`mongodb://127.0.0.1:27017/WonderLust` ;
 
 main()
     .then(() => console.log(`Connected successfully`))
