@@ -8,9 +8,10 @@ const Joi = require('joi');
         price:Joi.number().required().min(0),
         country:Joi.string().required(),
         location:Joi.string().required(),
+        category:Joi.string().required()
     }).required()
  });
-
+ 
 
  const reviewSchema = Joi.object({
     review:Joi.object({
