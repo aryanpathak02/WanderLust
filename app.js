@@ -19,7 +19,7 @@ const User = require("./models/user.js");
 const LocalStrategy = require("passport-local");
 const userRoute = require("./router/user.js");
 
-const dbUrl =`mongodb://127.0.0.1:27017/WonderLust` ;
+const dbUrl = process.env.ATLASLINK   ;
 
 main()
     .then(() => console.log(`Connected successfully`))
@@ -64,6 +64,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 3,
         httpOnly: true
     },
+    store
 }));
 
 app.use(passport.initialize());
